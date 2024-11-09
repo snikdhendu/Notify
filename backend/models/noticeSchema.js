@@ -11,6 +11,10 @@ const noticeSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    school: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'admin'
+    },
 }, { timestamps: true });
 
 module.exports = mongoose.model("notice", noticeSchema);

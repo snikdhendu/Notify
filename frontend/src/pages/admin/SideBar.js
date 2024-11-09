@@ -29,13 +29,13 @@ const SideBar = () => {
                     <ListItemIcon>
                         <Home className={`mr-3 h-5 w-5 ${isActive('/') ? ' text-orange-500' : 'text-gray-500'}`} />
                     </ListItemIcon>
-                    <ListItemText primary="Home" />
+                    <ListItemText primary="Home" className={`${isActive('/') ? ' text-orange-500' : 'text-black'}`}  />
                 </ListItemButton>
                 <ListItemButton component={Link} to="/Admin/classes">
                     <ListItemIcon>
                         <GraduationCap className={`mr-3 h-5 w-5 ${isActive('/Admin/classes') ? 'text-orange-500' : 'text-gray-500'}`} />
                     </ListItemIcon>
-                    <ListItemText primary="Classes" />
+                    <ListItemText primary="Classes" className={`${isActive('/Admin/classes') ? ' text-orange-500' : 'text-black'}`} />
                 </ListItemButton>
                 {/* <ListItemButton component={Link} to="/Admin/subjects">
                     <ListItemIcon>
@@ -47,19 +47,19 @@ const SideBar = () => {
                     <ListItemIcon>
                         <Users className={`mr-3 h-5 w-5 ${isActive('/Admin/teachers') ? 'text-orange-500' : 'text-gray-500'}`} />
                     </ListItemIcon>
-                    <ListItemText primary="Teachers" />
+                    <ListItemText primary="Teachers" className={`${isActive('/Admin/teachers') ? ' text-orange-500' : 'text-black'}`}/>
                 </ListItemButton>
                 <ListItemButton component={Link} to="/Admin/students">
                     <ListItemIcon>
                         <User className={`mr-3 h-5 w-5 ${isActive('/Admin/students') ? 'text-orange-500' : 'text-gray-500'}`} />
                     </ListItemIcon>
-                    <ListItemText primary="Students" />
+                    <ListItemText primary="Students" className={`${isActive('/Admin/students') ? ' text-orange-500' : 'text-black'}`} />
                 </ListItemButton>
                 <ListItemButton component={Link} to="/Admin/addnotice">
                     <ListItemIcon>
                         <Bell className={`mr-3 h-5 w-5 ${isActive('/Admin/addnotice') ? 'text-orange-500' : 'text-gray-500'}`} />
                     </ListItemIcon>
-                    <ListItemText primary="Notices" />
+                    <ListItemText primary="Notices"  className={`${isActive('/Admin/addnotice') ? ' text-orange-500' : 'text-black'}`}/>
                 </ListItemButton>
                 {/* <ListItemButton component={Link} to="/Admin/complains">
                     <ListItemIcon>
@@ -77,13 +77,13 @@ const SideBar = () => {
                     <ListItemIcon>
                         <UserCircle className={`mr-3 h-5 w-5 ${isActive('/Admin/profile') ? 'text-orange-500' : 'text-gray-500'}`} />
                     </ListItemIcon>
-                    <ListItemText primary="Profile" />
+                    <ListItemText primary="Profile" className={`${isActive('/Admin/profile') ? ' text-orange-500' : 'text-black'}`}/>
                 </ListItemButton>
                 <ListItemButton component={Link} to="/logout">
                     <ListItemIcon>
                         <LogOut className={`mr-3 h-5 w-5 ${isActive('/logout') ? 'text-orange-500' : 'text-gray-500'}`} />
                     </ListItemIcon>
-                    <ListItemText primary="Logout" />
+                    <ListItemText primary="Logout" className={`${isActive('/logout') ? ' text-orange-500' : 'text-black'}`}/>
                 </ListItemButton>
             </React.Fragment>
         </>

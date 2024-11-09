@@ -10,8 +10,9 @@ import CountUp from 'react-countup';
 import Subject from "../../assets/subjects.svg";
 import Assignment from "../../assets/assignment.svg";
 import { getSubjectList } from '../../redux/sclassRelated/sclassHandle';
-import Shownotice from '../admin/noticeRelated/ShowNotices';
-
+// import Shownotice from '../admin/noticeRelated/ShowNotices';
+import { Users, GraduationCap, UserCog, DollarSign } from "lucide-react"
+import ShowNotices from '../admin/noticeRelated/ShowNotices';
 const StudentHomePage = () => {
     const dispatch = useDispatch();
 
@@ -42,9 +43,24 @@ const StudentHomePage = () => {
         { name: 'Present', value: overallAttendancePercentage },
         { name: 'Absent', value: overallAbsentPercentage }
     ];
+    const statsCards = [
+        {
+          title: "Present",
+          value: overallAttendancePercentage,
+          icon: Users,
+          gradient: "from-blue-600 to-blue-400",
+        },
+        {
+          title: "Absent",
+          value:overallAbsentPercentage,
+          icon: GraduationCap,
+          gradient: "from-purple-600 to-purple-400",
+        },
+        
+      ]
     return (
         <>
-            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            {/* <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={3} lg={3}>
                         <StyledPaper>
@@ -98,7 +114,41 @@ const StudentHomePage = () => {
                         </Paper>
                     </Grid>
                 </Grid>
-            </Container>
+            </Container> */}
+            <div className="container mx-auto px-4 py-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {statsCards.map((card, index) => (
+                        <div
+                            key={card.title}
+                            className={`bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 animate-fade-in-up`}
+                            style={{ animationDelay: `${index * 100}ms` }}
+                        >
+                            <div className={`p-6 bg-gradient-to-br ${card.gradient}`}>
+                                <div className="flex items-center justify-between">
+                                    <div className="p-3 bg-white bg-opacity-30 rounded-full animate-float">
+                                        <card.icon className="w-6 h-6 text-white " />
+                                    </div>
+                                    <div className="text-2xl font-bold text-white animate-count-up" style={{
+                                        counterReset: `count ${card.value}`,
+                                        animation: 'count-up 2s linear forwards'
+                                    }}>
+                                        {card.prefix}{card.value}
+                                    </div>
+                                </div>
+                                <h3 className="mt-4 text-lg font-medium text-white">
+                                    {card.title}
+                                </h3>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                <div className="mt-6 bg-white rounded-lg shadow-lg overflow-hidden animate-fade-in-up" style={{ animationDelay: '400ms' }}>
+                    <div className="p-6">
+                        <ShowNotices />
+                    </div>
+                </div>
+            </div>
         </>
     )
 }

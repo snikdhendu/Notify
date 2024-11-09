@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Search, Plus, X } from 'lucide-react'
+import { useSelector } from 'react-redux'
 
 function NoticeForm({ isModal, title, desc, setTitle, setDesc, handleSubmit }) {
   return (
@@ -51,29 +52,46 @@ export default function Component() {
   const [title, setTitle] = useState('')
   const [desc, setDesc] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
+  const { currentUser } = useSelector(state => state.user);
+  // const adminID = currentUser._id
+  // const schoolID = currentUser.schoolID;
+  let schoolID = '';
+  console.log(currentUser.role);
+  if (currentUser.role == 'Admin') {
+    schoolID = currentUser._id;
+  } else if (currentUser.role == 'Teacher') {
+    schoolID = currentUser.school._id;
 
+  } else {
+    schoolID = currentUser.school._id;
+  }
+  console.log(schoolID);
   const fetchListOfNotices = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/NoticeList')
+      const response = await axios.get(`http://localhost:5000/NoticeList/${schoolID}`)
       const result = response.data
-      if (result) {
-        setNotices(result)
-      }
+      console.log(result);
+      //if (!result) {
+      setNotices(Array.isArray(result) ? result : []);
+      //}
     } catch (error) {
       console.error('Error fetching notices:', error)
+      setNotices([]);
     }
   }
 
   useEffect(() => {
     fetchListOfNotices()
   }, [])
+  // console.log(notices);
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
       const response = await axios.post('http://localhost:5000/NoticeCreate', {
         title: title,
-        details: desc
+        details: desc,
+        adminID: schoolID,
       })
       if (response.data) {
         setTitle('')
@@ -90,7 +108,16 @@ export default function Component() {
     notice.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
     notice.details.toLowerCase().includes(searchQuery.toLowerCase())
   )
-
+  if (notices.length === 0 && currentUser.role == 'Student') {
+    return (
+      <div className="min-h-screen bg-[#FFF8F3] p-8">
+        <h1 className="text-center text-4xl font-bold mb-12">
+          <span className="text-[#F48C06]">No</span>{" "}
+          <span className="text-[#2F327D]">Notices</span>
+        </h1>
+      </div>
+    )
+  }
   if (notices.length === 0) {
     return (
       <div className="min-h-screen bg-[#FFF8F3] p-8">
@@ -117,13 +144,18 @@ export default function Component() {
             <span className="text-[#F48C06]">Latest</span>{" "}
             <span className="text-[#2F327D]">Notices</span>
           </h1>
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="flex items-center gap-2 py-2 px-4 text-white font-medium rounded-xl bg-[#F48C06] hover:bg-[#e07a05] transition-colors"
-          >
-            <Plus className="w-5 h-5" />
-            Add Notice
-          </button>
+          {
+            currentUser.role !== 'Student' && (
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="flex items-center gap-2 py-2 px-4 text-white font-medium rounded-xl bg-[#F48C06] hover:bg-[#e07a05] transition-colors"
+              >
+                <Plus className="w-5 h-5" />
+                Add Notice
+              </button>
+            )
+          }
+
         </div>
 
         {/* Search Bar */}

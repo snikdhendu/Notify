@@ -3,9 +3,11 @@ const Notice = require('../models/noticeSchema.js');
 const noticeCreate = async (req, res) => {
     try {
         const notice = new Notice({
-            title: req.body.title,
-            details: req.body.details,
-            date: req.body.date
+            // title: req.body.title,
+            // details: req.body.details,
+            // date: req.body.date
+            ...req.body,
+            school: req.body.adminID
         });
         const result = await notice.save();
         res.send(result);
@@ -16,7 +18,7 @@ const noticeCreate = async (req, res) => {
 
 const noticeList = async (req, res) => {
     try {
-        const notices = await Notice.find({});
+        const notices = await Notice.find({school: req.params.id});
         if (notices.length > 0) {
             res.send(notices);
         } else {

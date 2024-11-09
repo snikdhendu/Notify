@@ -77,7 +77,7 @@ router.post('/TeacherAttendance/:id', teacherAttendance)
 // Notice
 
 router.post('/NoticeCreate', noticeCreate);
-router.get('/NoticeList', noticeList);
+router.get('/NoticeList/:id', noticeList);
 router.delete("/Notices/:id", deleteNotices);
 router.delete("/Notice/:id", deleteNotice);
 router.put("/Notice/:id", updateNotice);

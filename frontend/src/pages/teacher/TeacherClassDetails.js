@@ -1,12 +1,8 @@
-import { useEffect } from "react";
-import * as React from 'react';
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
 import { getClassStudents } from "../../redux/sclassRelated/sclassHandle";
-import { Paper, Box, Typography, ButtonGroup, Button, Popper, Grow, ClickAwayListener, MenuList, MenuItem } from '@mui/material';
-import { BlackButton, BlueButton} from "../../components/buttonStyles";
-import TableTemplate from "../../components/TableTemplate";
-import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
+import { ChevronDown, ChevronUp, Eye } from 'lucide-react';
 
 const TeacherClassDetails = () => {
     const navigate = useNavigate()
@@ -39,11 +35,10 @@ const TeacherClassDetails = () => {
     })
 
     const StudentsButtonHaver = ({ row }) => {
-        const options = ['Take Attendance', 'Provide Marks'];
-
-        const [open, setOpen] = React.useState(false);
-        const anchorRef = React.useRef(null);
-        const [selectedIndex, setSelectedIndex] = React.useState(0);
+        const options = [];
+        const [open, setOpen] = useState(false);
+        const anchorRef = useRef(null);
+        const [selectedIndex, setSelectedIndex] = useState(0);
 
         const handleClick = () => {
             console.info(`You clicked ${options[selectedIndex]}`);
@@ -61,7 +56,7 @@ const TeacherClassDetails = () => {
             navigate(`/Teacher/class/student/marks/${row.id}/${subjectID}`)
         };
 
-        const handleMenuItemClick = (event, index) => {
+        const handleMenuItemClick = (index) => {
             setSelectedIndex(index);
             setOpen(false);
         };
@@ -74,104 +69,104 @@ const TeacherClassDetails = () => {
             if (anchorRef.current && anchorRef.current.contains(event.target)) {
                 return;
             }
-
             setOpen(false);
         };
+
         return (
-            <>
-                <BlueButton
-                    variant="contained"
-                    onClick={() =>
-                        navigate("/Teacher/class/student/" + row.id)
-                    }
+            <div className="flex space-x-2">
+                <button
+                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
+                    onClick={() => navigate("/Teacher/class/student/" + row.id)}
                 >
-                    View
-                </BlueButton>
-                <React.Fragment>
-                    <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
-                        <Button onClick={handleClick}>{options[selectedIndex]}</Button>
-                        <BlackButton
-                            size="small"
-                            aria-controls={open ? 'split-button-menu' : undefined}
-                            aria-expanded={open ? 'true' : undefined}
-                            aria-label="select merge strategy"
-                            aria-haspopup="menu"
-                            onClick={handleToggle}
+                    <Eye className="w-5 h-5" />
+                </button>
+                {/* <div className="relative">
+                    <div className="flex">
+                        <button
+                            className="bg-gray-200 text-gray-800 px-4 py-2 rounded-l hover:bg-gray-300 transition-colors"
+                            onClick={handleClick}
                         >
-                            {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
-                        </BlackButton>
-                    </ButtonGroup>
-                    <Popper
-                        sx={{
-                            zIndex: 1,
-                        }}
-                        open={open}
-                        anchorEl={anchorRef.current}
-                        role={undefined}
-                        transition
-                        disablePortal
-                    >
-                        {({ TransitionProps, placement }) => (
-                            <Grow
-                                {...TransitionProps}
-                                style={{
-                                    transformOrigin:
-                                        placement === 'bottom' ? 'center top' : 'center bottom',
-                                }}
-                            >
-                                <Paper>
-                                    <ClickAwayListener onClickAway={handleClose}>
-                                        <MenuList id="split-button-menu" autoFocusItem>
-                                            {options.map((option, index) => (
-                                                <MenuItem
-                                                    key={option}
-                                                    disabled={index === 2}
-                                                    selected={index === selectedIndex}
-                                                    onClick={(event) => handleMenuItemClick(event, index)}
-                                                >
-                                                    {option}
-                                                </MenuItem>
-                                            ))}
-                                        </MenuList>
-                                    </ClickAwayListener>
-                                </Paper>
-                            </Grow>
-                        )}
-                    </Popper>
-                </React.Fragment>
-            </>
+                            {options[selectedIndex]}
+                        </button>
+                        <button
+                            className="bg-gray-300 text-gray-800 px-2 py-2 rounded-r hover:bg-gray-400 transition-colors"
+                            onClick={handleToggle}
+                            ref={anchorRef}
+                        >
+                            {open ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+                        </button>
+                    </div>
+                    {open && (
+                        <div className="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                            <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                                {options.map((option, index) => (
+                                    <button
+                                        key={option}
+                                        className={`${
+                                            index === selectedIndex ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+                                        } group flex w-full items-center px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900`}
+                                        onClick={() => handleMenuItemClick(index)}
+                                    >
+                                        {option}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div> */}
+            </div>
         );
     };
 
     return (
-        <>
+        <div className="container mx-auto px-4 py-8">
             {loading ? (
-                <div>Loading...</div>
+                <div className="text-center">Loading...</div>
             ) : (
                 <>
-                    <Typography variant="h4" align="center" gutterBottom>
-                        Class Details
-                    </Typography>
+                    <h1 className="text-3xl font-bold text-center mb-8">Class Details</h1>
                     {getresponse ? (
-                        <>
-                            <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
-                                No Students Found
-                            </Box>
-                        </>
+                        <div className="text-right mt-4">No Students Found</div>
                     ) : (
-                        <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-                            <Typography variant="h5" gutterBottom>
-                                Students List:
-                            </Typography>
-
-                            {Array.isArray(sclassStudents) && sclassStudents.length > 0 &&
-                                <TableTemplate buttonHaver={StudentsButtonHaver} columns={studentColumns} rows={studentRows} />
-                            }
-                        </Paper>
+                        <div className="bg-white shadow-md rounded-lg overflow-hidden">
+                            <h2 className="text-xl font-semibold p-4 bg-gray-50">Students List:</h2>
+                            {Array.isArray(sclassStudents) && sclassStudents.length > 0 && (
+                                <div className="overflow-x-auto">
+                                    <table className="w-full">
+                                        <thead>
+                                            <tr className="bg-[#2F327D] text-white">
+                                                {studentColumns.map((column) => (
+                                                    <th key={column.id} className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                                        {column.label}
+                                                    </th>
+                                                ))}
+                                                <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                                    Actions
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="bg-white divide-y divide-gray-200">
+                                            {studentRows.map((row) => (
+                                                <tr key={row.id}>
+                                                    {studentColumns.map((column) => (
+                                                        <td key={column.id} className="px-6 py-4 whitespace-nowrap">
+                                                            {row[column.id]}
+                                                        </td>
+                                                    ))}
+                                                    <td className="px-6 py-4 whitespace-nowrap">
+                                                        <StudentsButtonHaver row={row} />
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )}
+                        </div>
                     )}
                 </>
             )}
-        </>
+        </div>
     );
 };
 

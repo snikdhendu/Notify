@@ -4,6 +4,7 @@ import React from 'react'
 import { LogOut, X } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
+import { authLogout } from '../redux/userRelated/userSlice';
 
 export default function LogoutModal() {
   const currentUser = useSelector(state => state.user.currentUser)
@@ -11,9 +12,9 @@ export default function LogoutModal() {
   const dispatch = useDispatch()
 
   const handleLogout = () => {
-    dispatch({ type: 'auth/logout' })
-    navigate('/')
-  }
+    dispatch(authLogout());
+    navigate('/');
+};
 
   const handleCancel = () => {
     navigate(-1)

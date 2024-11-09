@@ -2,25 +2,45 @@
 
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { useSelector } from 'react-redux'
 
 export default function Component() {
   const [notices, setNotices] = useState([])
+  const { currentUser } = useSelector(state => state.user);
+  let schoolID = '';
+  console.log(currentUser.role);
+  if(currentUser.role == 'Admin') {
+    schoolID=currentUser._id;
+  }else {
+    schoolID=currentUser.school._id;
+    
+  }
 
   const fetchListOfNotices = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/NoticeList')
+      const response = await axios.get(`http://localhost:5000/NoticeList/${schoolID}`);
+      // await axios.get(`${process.env.REACT_APP_BASE_URL}/${address}List/${id}`);
       const result = response.data
-      if (result) {
-        setNotices(result)
-      }
+      // if (result) {
+        setNotices(Array.isArray(result) ? result : []);
+      // }
     } catch (error) {
       console.error('Error fetching notices:', error)
+      setNotices([]);
     }
   }
 
   useEffect(() => {
     fetchListOfNotices()
   }, [])
+  if(notices.length === 0) {
+    return (
+      <div className="min-h-screen bg-[#FFF8F3] px-4 py-8 md:px-6 lg:px-8">
+        No Notice Till date
+     </div>
+    )
+
+  }
 
   return (
     <div className="min-h-screen bg-[#FFF8F3] px-4 py-8 md:px-6 lg:px-8">

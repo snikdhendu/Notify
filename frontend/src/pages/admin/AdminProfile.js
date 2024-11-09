@@ -1,105 +1,53 @@
-// import React, { useState } from 'react';
-// import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material'
-// import { useDispatch, useSelector } from 'react-redux';
-// import { deleteUser, updateUser } from '../../redux/userRelated/userHandle';
-// import { useNavigate } from 'react-router-dom'
-// import { authLogout } from '../../redux/userRelated/userSlice';
-// import { Button, Collapse } from '@mui/material';
+import React from 'react'
+import { useSelector } from 'react-redux'
+import { User, Mail, School } from 'lucide-react'
 
-import { useSelector } from 'react-redux';
+export default function AdminProfile() {
+  const { currentUser } = useSelector((state) => state.user)
 
-const AdminProfile = () => {
-    // const [showTab, setShowTab] = useState(false);
-    // const buttonText = showTab ? 'Cancel' : 'Edit profile';
-
-    // const navigate = useNavigate()
-    // const dispatch = useDispatch();
-        const { currentUser } = useSelector((state) => state.user);
-    // const { currentUser, response, error } = useSelector((state) => state.user);
-    // const address = "Admin"
-
-    // if (response) { console.log(response) }
-    // else if (error) { console.log(error) }
-
-    // const [name, setName] = useState(currentUser.name);
-    // const [email, setEmail] = useState(currentUser.email);
-    // const [password, setPassword] = useState("");
-    // const [schoolName, setSchoolName] = useState(currentUser.schoolName);
-
-    // const fields = password === "" ? { name, email, schoolName } : { name, email, password, schoolName }
-
-    // const submitHandler = (event) => {
-    //     event.preventDefault()
-    //     dispatch(updateUser(fields, currentUser._id, address))
-    // }
-
-    // const deleteHandler = () => {
-    //     try {
-    //         dispatch(deleteUser(currentUser._id, "Students"));
-    //         dispatch(deleteUser(currentUser._id, address));
-    //         dispatch(authLogout());
-    //         navigate('/');
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // }
-
-    return (
-        <div>
-            Name: {currentUser.name}
-            <br />
-            Email: {currentUser.email}
-            <br />
-            School: {currentUser.schoolName}
-            <br />
-            {/* <Button variant="contained" color="error" onClick={deleteHandler}>Delete</Button> */}
-            {/* <Button variant="contained" sx={styles.showButton}
-                onClick={() => setShowTab(!showTab)}>
-                {showTab ? <KeyboardArrowUp /> : <KeyboardArrowDown />}{buttonText}
-            </Button>
-            <Collapse in={showTab} timeout="auto" unmountOnExit>
-                <div className="register">
-                    <form className="registerForm" onSubmit={submitHandler}>
-                        <span className="registerTitle">Edit Details</span>
-                        <label>Name</label>
-                        <input className="registerInput" type="text" placeholder="Enter your name..."
-                            value={name}
-                            onChange={(event) => setName(event.target.value)}
-                            autoComplete="name" required />
-
-                        <label>School</label>
-                        <input className="registerInput" type="text" placeholder="Enter your school name..."
-                            value={schoolName}
-                            onChange={(event) => setSchoolName(event.target.value)}
-                            autoComplete="name" required />
-
-                        <label>Email</label>
-                        <input className="registerInput" type="email" placeholder="Enter your email..."
-                            value={email}
-                            onChange={(event) => setEmail(event.target.value)}
-                            autoComplete="email" required />
-
-                        <label>Password</label>
-                        <input className="registerInput" type="password" placeholder="Enter your password..."
-                            value={password}
-                            onChange={(event) => setPassword(event.target.value)}
-                            autoComplete="new-password" />
-
-                        <button className="registerButton" type="submit" >Update</button>
-                    </form>
-                </div>
-            </Collapse> */}
+  return (
+    <div className="min-h-screen bg-[#FFF5EB] flex items-center justify-center p-4">
+      <div className="bg-white rounded-lg shadow-lg overflow-hidden max-w-md w-full">
+        <div className="bg-[#2F327D] text-white p-6 text-center">
+          <h2 className="text-3xl font-bold mb-2">{currentUser.name}</h2>
+          <p className="text-[#00C1FE]">Administrator</p>
         </div>
-    )
+        <div className="p-6">
+          <div className="mb-6">
+            <h3 className="text-xl font-semibold text-[#2F327D] mb-4">Profile Information</h3>
+            <div className="space-y-4">
+              <div className="flex items-center">
+                <User className="text-[#F48C06] mr-3" />
+                <div>
+                  <p className="text-sm text-gray-500">Full Name</p>
+                  <p className="font-medium">{currentUser.name}</p>
+                </div>
+              </div>
+              <div className="flex items-center">
+                <Mail className="text-[#F48C06] mr-3" />
+                <div>
+                  <p className="text-sm text-gray-500">Email</p>
+                  <p className="font-medium">{currentUser.email}</p>
+                </div>
+              </div>
+              <div className="flex items-center">
+                <School className="text-[#F48C06] mr-3" />
+                <div>
+                  <p className="text-sm text-gray-500">School</p>
+                  <p className="font-medium">{currentUser.schoolName}</p>
+                </div>
+              </div>
+
+              
+            </div>
+          </div>
+          <div className="mt-6 flex justify-center">
+            <button className="px-6 py-2 bg-[#F48C06] text-white rounded-full hover:bg-[#F48C06]/90 transition-colors">
+              Edit Profile
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 }
-
-export default AdminProfile
-
-// const styles = {
-//     attendanceButton: {
-//         backgroundColor: "#270843",
-//         "&:hover": {
-//             backgroundColor: "#3f1068",
-//         }
-//     }
-// }

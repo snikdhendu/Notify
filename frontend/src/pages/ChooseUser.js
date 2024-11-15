@@ -144,7 +144,7 @@ export default function ChooseUser({ visitor }) {
               </div>
               <h2 className="text-2xl font-semibold text-center text-[#252641] mb-4">Teacher</h2>
               <p className="text-center text-[#696984]">
-                Login as a teacher to create courses, assignments, and track student progress.
+                Login as a teacher to track student progress.
               </p>
             </div>
           </div>

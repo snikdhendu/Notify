@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { registerUser } from '../../redux/userRelated/userHandle'
 import { EyeIcon, EyeOffIcon } from 'lucide-react'
 
+
 export default function AdminRegisterPage() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -23,7 +24,7 @@ export default function AdminRegisterPage() {
     event.preventDefault()
     const formData = new FormData(event.target)
     const fields = Object.fromEntries(formData.entries())
-    
+
     const errors = {}
     Object.keys(fields).forEach(key => {
       if (!fields[key]) {
@@ -59,6 +60,7 @@ export default function AdminRegisterPage() {
 
   return (
     <div className="min-h-screen flex bg-[#FFF8F3]">
+
       <div className="flex-1 flex flex-col justify-center px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
         <div className="mx-auto w-full max-w-sm lg:w-96">
           <div className="text-center">
@@ -178,8 +180,9 @@ export default function AdminRegisterPage() {
           </div>
         </div>
       </div>
-      <div className="hidden lg:block relative w-0 flex-1">
-        <img className="absolute inset-0 h-full w-full object-cover" src="/placeholder.svg?height=1080&width=1920" alt="Background" />
+      <div className="hidden lg:block relative w-0 flex-1 min-h-screen">
+        {/* <img src=''/> */}
+                  
       </div>
 
       {showPopup && (
